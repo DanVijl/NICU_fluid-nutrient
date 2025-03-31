@@ -1,0 +1,30 @@
+{
+  "NICU-mix": {
+    "energy_kcal_per_ml": 0.29,
+    "protein_g_per_ml": 0.0743,
+    "carbohydrate_g_per_ml": 0.0,
+    "fat_g_per_ml": 0.0,
+    "sodium_mmol_per_ml": 0.0543,
+    "potassium_mmol_per_ml": 0.0714,
+    "calcium_mmol_per_ml": 0.0257,
+    "phosphate_mmol_per_ml": 0.0343,
+    "magnesium_mmol_per_ml": 0.00429,
+    "iron_mmol_per_ml": 0.0,
+    "vitamin_d_ie_per_ml": 0.0,
+    "chloride_mmol_per_ml": 0.0
+  },
+  "Samenstelling_B": {
+    "energy_kcal_per_ml": 0.29,
+    "protein_g_per_ml": 0.0743,
+    "carbohydrate_g_per_ml": 0.0,
+    "fat_g_per_ml": 0.0,
+    "sodium_mmol_per_ml": 0.00714,
+    "potassium_mmol_per_ml": 0.0171,
+    "calcium_mmol_per_ml": 0.0257,
+    "phosphate_mmol_per_ml": 0.0214,
+    "magnesium_mmol_per_ml": 0.00571,
+    "iron_mmol_per_ml": 0.0,
+    "vitamin_d_ie_per_ml": 0.0,
+    "chloride_mmol_per_ml": 0.0
+  }
+}

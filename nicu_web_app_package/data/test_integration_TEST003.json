@@ -1,0 +1,107 @@
+{
+  "patient": {
+    "patient_id": "TEST003",
+    "gestational_age_at_birth": 32,
+    "birth_weight": 1250,
+    "current_weight": 1250,
+    "postnatal_age": 5,
+    "phototherapy": "Double",
+    "clinical_condition": "Sepsis",
+    "weight_category": "premature_1000_1500g"
+  },
+  "nutrition_plan": {
+    "plan_id": "NP-TEST003",
+    "date": "2025-03-29",
+    "total_fluid_target": 180,
+    "enteral_volume": 50,
+    "parenteral_volume": 130,
+    "tpn_type": "NICU-mix",
+    "tpn_volume": 90,
+    "lipid_type": "Intralipid_20%",
+    "lipid_volume": 15,
+    "glucose_concentration": "12.5%",
+    "glucose_volume": 25,
+    "enteral_feeding_type": "Donor milk",
+    "enteral_feeding_frequency": 12,
+    "bmf_concentration": 1.0
+  },
+  "calculated_values": {
+    "total_energy": 65.6,
+    "total_protein": 6.687,
+    "total_carbohydrate": 3.125,
+    "total_fat": 3.0,
+    "total_sodium": 4.8870000000000005,
+    "total_potassium": 6.426,
+    "total_calcium": 2.313,
+    "total_phosphate": 3.0869999999999997,
+    "total_magnesium": 0.38610000000000005,
+    "glucose_infusion_rate": 2.170138888888889
+  },
+  "recommendations": [
+    "Increase glucose infusion rate to at least 4 mg/kg/min (current: 2.17 mg/kg/min)",
+    "Consider reducing protein intake to maximum 3.5 g/kg/day (current: 6.69 g/kg/day)",
+    "In sepsis, consider reducing lipid intake and monitoring triglyceride levels"
+  ],
+  "feeding_schedule": [
+    {
+      "time": "00:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "02:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "04:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "06:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "08:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "10:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "12:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "14:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "16:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "18:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "20:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    },
+    {
+      "time": "22:00",
+      "volume_per_kg": 4.166666666666667,
+      "type": "Donor milk"
+    }
+  ]
+}

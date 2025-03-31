@@ -1,0 +1,88 @@
+{
+  "patient": {
+    "patient_id": "TEST002",
+    "gestational_age_at_birth": 38,
+    "birth_weight": 3200,
+    "current_weight": 3200,
+    "postnatal_age": 2,
+    "phototherapy": "None",
+    "clinical_condition": "Hyperglycemia",
+    "weight_category": "term"
+  },
+  "nutrition_plan": {
+    "plan_id": "NP-TEST002",
+    "date": "2025-03-29",
+    "total_fluid_target": 100,
+    "enteral_volume": 60,
+    "parenteral_volume": 40,
+    "tpn_type": "Samenstelling_B",
+    "tpn_volume": 20,
+    "lipid_type": "SMOF_20%",
+    "lipid_volume": 10,
+    "glucose_concentration": "5%",
+    "glucose_volume": 10,
+    "enteral_feeding_type": "Formula",
+    "enteral_feeding_frequency": 8,
+    "bmf_concentration": 0
+  },
+  "calculated_values": {
+    "total_energy": 25.8,
+    "total_protein": 1.4860000000000002,
+    "total_carbohydrate": 0.5,
+    "total_fat": 2.0,
+    "total_sodium": 0.14279999999999998,
+    "total_potassium": 0.342,
+    "total_calcium": 0.514,
+    "total_phosphate": 0.428,
+    "total_magnesium": 0.1142,
+    "glucose_infusion_rate": 0.3472222222222222
+  },
+  "recommendations": [
+    "Consider reducing total fluid intake to maximum 70 ml/kg/day (current: 100 ml/kg/day)",
+    "Increase glucose infusion rate to at least 2.5 mg/kg/min (current: 0.35 mg/kg/min)",
+    "Increase protein intake to at least 1.5 g/kg/day (current: 1.49 g/kg/day)",
+    "In hyperglycemia, consider reducing glucose infusion rate and monitoring blood glucose levels"
+  ],
+  "feeding_schedule": [
+    {
+      "time": "00:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "03:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "06:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "09:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "12:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "15:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "18:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    },
+    {
+      "time": "21:00",
+      "volume_per_kg": 7.5,
+      "type": "Formula"
+    }
+  ]
+}

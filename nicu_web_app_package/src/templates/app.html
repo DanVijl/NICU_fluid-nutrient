@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICU Fluid Management App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #0d6efd;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .sidebar {
+            background-color: #fff;
+            border-right: 1px solid #dee2e6;
+            height: calc(100vh - 56px);
+            position: sticky;
+            top: 56px;
+            padding-top: 1rem;
+        }
+        .sidebar .nav-link {
+            color: #333 !important;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        .sidebar .nav-link.active {
+            background-color: #e9ecef;
+            font-weight: 500;
+        }
+        .sidebar .nav-link i {
+            margin-right: 0.5rem;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0a58ca;
+            border-color: #0a58ca;
+        }
+        .tab-content {
+            padding: 1.5rem;
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .nav-tabs .nav-link {
+            color: #495057 !important;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+        }
+        .nav-tabs .nav-link.active {
+            color: #0d6efd !important;
+            border-bottom: 3px solid #0d6efd;
+            background-color: transparent;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .progress {
+            height: 1rem;
+            margin-bottom: 1rem;
+        }
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .result-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .recommendation-item {
+            padding: 0.75rem;
+            border-left: 3px solid #0d6efd;
+            background-color: #f8f9fa;
+            margin-bottom: 0.5rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        .feeding-schedule-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .feeding-schedule-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">NICU Fluid Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/app">Application</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-white me-3">Welcome, {{ username }}</span>
+                    <a href="/logout" class="btn btn-outline-light">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/app">
+                            <i class="bi bi-calculator"></i> Fluid Calculator
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/patients">
+                            <i class="bi bi-people"></i> Patients
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nutrition-plans">
+                            <i class="bi bi-journal-medical"></i> Nutrition Plans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reports">
+                            <i class="bi bi-file-earmark-text"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">NICU Fluid Management Calculator</h1>
+                </div>
+
+                <!-- Application Tabs -->
+                <ul class="nav nav-tabs" id="appTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="patient-tab" data-bs-toggle="tab" data-bs-target="#patient" type="button" role="tab" aria-controls="patient" aria-selected="true">
+                            <i class="bi bi-person"></i> Patient Information
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="nutrition-tab" data-bs-toggle="tab" data-bs-target="#nutrition" type="button" role="tab" aria-controls="nutrition" aria-selected="false">
+                            <i class="bi bi-droplet"></i> Nutrition Planning
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="results-tab" data-bs-toggle="tab" data-bs-target="#results" type="button" role="tab" aria-controls="results" aria-selected="false">
+                            <i class="bi bi-clipboard-data"></i> Results Dashboard
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="feeding-tab" data-bs-toggle="tab" data-bs-target="#feeding" type="button" role="tab" aria-controls="feeding" aria-selected="false">
+                            <i class="bi bi-clock"></i> Feeding Schedule
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="appTabsContent">
+                    <!-- Patient Information Tab -->
+                    <div class="tab-pane fade show active" id="patient" role="tabpanel" aria-labelledby="patient-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-person-badge"></i> Patient Demographics
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="patientForm">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="patientId" class="form-label">Patient ID</label>
+                                                    <input type="text" class="form-control" id="patientId" name="patientId" placeholder="Enter patient ID or leave blank for auto-generation">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="gestationalAge" class="form-label">Gestational Age at Birth (weeks)</label>
+                                                    <input type="number" class="form-control" id="gestationalAge" name="gestationalAge" step="0.1" min="22" max="42" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="birthWeight" class="form-label">Birth Weight (grams)</label>
+                                                    <input type="number" class="form-control" id="birthWeight" name="birthWeight" min="400" max="7000" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="currentWeight" class="form-label">Current Weight (grams)</label>
+                                                    <input type="number" class="form-control" id="currentWeight" name="currentWeight" min="400" max="7000" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="postnatalAge" class="form-label">Postnatal Age (days)</label>
+                                                    <input type="number" class="form-control" id="postnatalAge" name="postnatalAge" min="0" required>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <i class="bi bi-clipboard-pulse"></i> Clinical Status
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="clinicalForm">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="phototherapy" class="form-label">Phototherapy</label>
+                                                    <select class="form-select" id="phototherapy" name="phototherapy">
+                                                        <option value="None">None</option>
+                                                        <option value="Single">Single</option>
+                                                        <option value="Double">Double</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="clinicalCondition" class="form-label">Clinical Condition</label>
+                                                    <select class="form-select" id="clinicalCondition" name="clinicalCondition">
+                                                        <option value="Normal">Normal</option>
+                                                        <option value="Sepsis">Sepsis</option>
+                                                        <option value="Hyperglycemia">Hyperglycemia</option>
+                                                        <option value="Hypoglycemia">Hypoglycemia</option>
+                                                        <option value="Fluid Restriction">Fluid Restriction</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="additionalNotes" class="form-label">Additional Notes</label>
+                                                <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="3"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Patient Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-info">
+                                            <h5 class="alert-heading"><i class="bi bi-lightbulb"></i> Weight Consideration</h5>
+                                            <p>If current weight is lower than birth weight, birth weight will be used for calculations.</p>
+                                        </div>
+                                        <div class="alert alert-warning">
+                                            <h5 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> Phototherapy</h5>
+                                            <p>Phototherapy increases fluid requirements:</p>
+                                            <ul>
+                                                <li>Single: +10-20 ml/kg/day</li>
+                                                <li>Double: +20-30 ml/kg/day</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="button" id="savePatientBtn" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-save"></i> Save Patient Information
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Planning Tab -->
+                    <div class="tab-pane fade" id="nutrition" role="tabpanel" aria-labelledby="nutrition-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-droplet"></i> Fluid Requirements
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Recommended Fluid Range</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="minFluid" readonly>
+                                                    <span class="input-group-text">-</span>
+                                                    <input type="text" class="form-control" id="maxFluid" readonly>
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="totalFluidTarget" class="form-label">Target Total Fluid Volume</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="totalFluidTarget" name="totalFluidTarget" min="0" max="300" required>
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="fluidProgressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <i class="bi bi-bag-plus"></i> Parenteral Nutrition
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="tpnType" class="form-label">TPN Type</label>
+                                                <select class="form-select" id="tpnType" name="tpnType">
+                                                    <option value="NICU-mix">NICU-mix</option>
+                                                    <option value="Samenstelling_B">Samenstelling B</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="tpnVolume" class="form-label">TPN Volume</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="tpnVolume" name="tpnVolume" min="0" max="200">
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="lipidType" class="form-label">Lipid Type</label>
+                                                <select class="form-select" id="lipidType" name="lipidType">
+                                                    <option value="Intralipid_20%">Intralipid 20%</option>
+                                                    <option value="SMOF_20%">SMOF 20%</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="lipidVolume" class="form-label">Lipid Volume</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="lipidVolume" name="lipidVolume" min="0" max="50">
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="glucoseConcentration" class="form-label">Glucose Concentration</label>
+                                                <select class="form-select" id="glucoseConcentration" name="glucoseConcentration">
+                                                    <option value="5%">5%</option>
+                                                    <option value="10%" selected>10%</option>
+                                                    <option value="12.5%">12.5%</option>
+                                                    <option value="15%">15%</option>
+                                                    <option value="20%">20%</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="glucoseVolume" class="form-label">Glucose Volume</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="glucoseVolume" name="glucoseVolume" min="0" max="100">
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <i class="bi bi-cup-straw"></i> Enteral Nutrition
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="enteralFeedingType" class="form-label">Enteral Feeding Type</label>
+                                                <select class="form-select" id="enteralFeedingType" name="enteralFeedingType">
+                                                    <option value="Breast milk">Breast milk</option>
+                                                    <option value="Donor milk">Donor milk</option>
+                                                    <option value="Formula">Formula</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="enteralVolume" class="form-label">Enteral Volume</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="enteralVolume" name="enteralVolume" min="0" max="200">
+                                                    <span class="input-group-text">ml/kg/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="enteralFeedingFrequency" class="form-label">Feeding Frequency</label>
+                                                <select class="form-select" id="enteralFeedingFrequency" name="enteralFeedingFrequency">
+                                                    <option value="8">8 feeds per 24 hours</option>
+                                                    <option value="12" selected>12 feeds per 24 hours</option>
+                                                    <option value="24">24 feeds per 24 hours (hourly)</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="bmfConcentration" class="form-label">BMF Concentration (g/100ml)</label>
+                                                <input type="number" class="form-control" id="bmfConcentration" name="bmfConcentration" min="0" max="5" step="0.1" value="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Nutrition Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-info">
+                                            <h5 class="alert-heading"><i class="bi bi-lightbulb"></i> TPN Types</h5>
+                                            <p><strong>NICU-mix:</strong> Higher sodium and potassium content</p>
+                                            <p><strong>Samenstelling B:</strong> Lower electrolyte content</p>
+                                        </div>
+                                        <div class="alert alert-warning">
+                                            <h5 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> Fluid Balance</h5>
+                                            <p>Total fluid intake = Parenteral + Enteral</p>
+                                            <p>Parenteral = TPN + Lipids + Glucose</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <i class="bi bi-calculator"></i> Fluid Summary
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-2">
+                                            <div class="col-6">Parenteral:</div>
+                                            <div class="col-6 text-end" id="parenteralTotal">0 ml/kg/day</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6">Enteral:</div>
+                                            <div class="col-6 text-end" id="enteralTotal">0 ml/kg/day</div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-6"><strong>Total:</strong></div>
+                                            <div class="col-6 text-end"><strong id="fluidTotal">0 ml/kg/day</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="button" id="calculateNutritionBtn" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-calculator"></i> Calculate Nutrition Values
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Dashboard Tab -->
+                    <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-clipboard-data"></i> Nutrition Values
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalEnergy">0</div>
+                                                    <div class="result-label">Energy (kcal/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalProtein">0</div>
+                                                    <div class="result-label">Protein (g/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalCarbohydrate">0</div>
+                                                    <div class="result-label">Carbohydrate (g/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalFat">0</div>
+                                                    <div class="result-label">Fat (g/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="glucoseInfusionRate">0</div>
+                                                    <div class="result-label">Glucose Infusion Rate (mg/kg/min)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalFluid">0</div>
+                                                    <div class="result-label">Total Fluid (ml/kg/day)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <i class="bi bi-lightning"></i> Electrolytes
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalSodium">0</div>
+                                                    <div class="result-label">Sodium (mmol/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalPotassium">0</div>
+                                                    <div class="result-label">Potassium (mmol/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalCalcium">0</div>
+                                                    <div class="result-label">Calcium (mmol/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalPhosphate">0</div>
+                                                    <div class="result-label">Phosphate (mmol/kg/day)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <div class="result-value" id="totalMagnesium">0</div>
+                                                    <div class="result-label">Magnesium (mmol/kg/day)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-lightbulb"></i> Recommendations
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="recommendationsContainer">
+                                            <div class="text-center py-4">
+                                                <i class="bi bi-lightbulb display-4 text-muted"></i>
+                                                <p class="mt-3">No recommendations available yet. Calculate nutrition values first.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="button" id="exportPlanBtn" class="btn btn-primary">
+                                        <i class="bi bi-download"></i> Export Nutrition Plan
+                                    </button>
+                                    <button type="button" id="printResultsBtn" class="btn btn-outline-primary">
+                                        <i class="bi bi-printer"></i> Print Results
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feeding Schedule Tab -->
+                    <div class="tab-pane fade" id="feeding" role="tabpanel" aria-labelledby="feeding-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-clock"></i> Feeding Schedule
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="feedingScheduleContainer">
+                                            <div class="text-center py-4">
+                                                <i class="bi bi-clock display-4 text-muted"></i>
+                                                <p class="mt-3">No feeding schedule available yet. Calculate nutrition values first.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Feeding Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-info">
+                                            <h5 class="alert-heading"><i class="bi bi-lightbulb"></i> Feeding Schedule</h5>
+                                            <p>The feeding schedule is generated based on:</p>
+                                            <ul>
+                                                <li>Total enteral volume</li>
+                                                <li>Feeding frequency</li>
+                                                <li>Patient's weight</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="button" id="printScheduleBtn" class="btn btn-primary">
+                                        <i class="bi bi-printer"></i> Print Feeding Schedule
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize variables
+            let currentPatientId = null;
+            let currentPlanId = null;
+            let fluidRequirements = { min: 0, max: 0 };
+            
+            // Tab navigation
+            const appTabs = document.querySelectorAll('#appTabs button');
+            appTabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Check if we can proceed to the next tab
+                    const targetTab = this.getAttribute('id');
+                    if (targetTab === 'nutrition-tab' && !currentPatientId) {
+                        alert('Please save patient information first.');
+                        return false;
+                    }
+                    if (targetTab === 'results-tab' && !currentPlanId) {
+                        alert('Please calculate nutrition values first.');
+                        return false;
+                    }
+                    if (targetTab === 'feeding-tab' && !currentPlanId) {
+                        alert('Please calculate nutrition values first.');
+                        return false;
+                    }
+                    
+                    // Activate the tab
+                    const bsTab = new bootstrap.Tab(this);
+                    bsTab.show();
+                });
+            });
+            
+            // Save Patient Information
+            document.getElementById('savePatientBtn').addEventListener('click', function() {
+                // Validate form
+                const patientForm = document.getElementById('patientForm');
+                const clinicalForm = document.getElementById('clinicalForm');
+                
+                if (!patientForm.checkValidity()) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Collect patient data
+                const patientData = {
+                    patientId: document.getElementById('patientId').value || null,
+                    gestationalAge: document.getElementById('gestationalAge').value,
+                    birthWeight: document.getElementById('birthWeight').value,
+                    currentWeight: document.getElementById('currentWeight').value,
+                    postnatalAge: document.getElementById('postnatalAge').value,
+                    phototherapy: document.getElementById('phototherapy').value,
+                    clinicalCondition: document.getElementById('clinicalCondition').value
+                };
+                
+                // Send API request
+                fetch('/api/patient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(patientData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentPatientId = data.patient_id;
+                        fluidRequirements = data.fluid_requirements;
+                        
+                        // Update UI
+                        document.getElementById('patientId').value = currentPatientId;
+                        document.getElementById('minFluid').value = fluidRequirements.min;
+                        document.getElementById('maxFluid').value = fluidRequirements.max;
+                        
+                        // Move to next tab
+                        const nutritionTab = document.getElementById('nutrition-tab');
+                        const bsTab = new bootstrap.Tab(nutritionTab);
+                        bsTab.show();
+                        
+                        alert('Patient information saved successfully!');
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while saving patient information.');
+                });
+            });
+            
+            // Calculate fluid totals
+            function updateFluidTotals() {
+                const tpnVolume = parseFloat(document.getElementById('tpnVolume').value) || 0;
+                const lipidVolume = parseFloat(document.getElementById('lipidVolume').value) || 0;
+                const glucoseVolume = parseFloat(document.getElementById('glucoseVolume').value) || 0;
+                const enteralVolume = parseFloat(document.getElementById('enteralVolume').value) || 0;
+                
+                const parenteralTotal = tpnVolume + lipidVolume + glucoseVolume;
+                const totalFluid = parenteralTotal + enteralVolume;
+                
+                document.getElementById('parenteralTotal').textContent = parenteralTotal.toFixed(1) + ' ml/kg/day';
+                document.getElementById('enteralTotal').textContent = enteralVolume.toFixed(1) + ' ml/kg/day';
+                document.getElementById('fluidTotal').textContent = totalFluid.toFixed(1) + ' ml/kg/day';
+                
+                // Update progress bar
+                if (fluidRequirements.min > 0 && fluidRequirements.max > 0) {
+                    const progressBar = document.getElementById('fluidProgressBar');
+                    const percentage = (totalFluid - fluidRequirements.min) / (fluidRequirements.max - fluidRequirements.min) * 100;
+                    
+                    progressBar.style.width = Math.min(Math.max(percentage, 0), 100) + '%';
+                    
+                    if (totalFluid < fluidRequirements.min) {
+                        progressBar.className = 'progress-bar bg-danger';
+                    } else if (totalFluid > fluidRequirements.max) {
+                        progressBar.className = 'progress-bar bg-warning';
+                    } else {
+                        progressBar.className = 'progress-bar bg-success';
+                    }
+                }
+            }
+            
+            // Add event listeners to update fluid totals
+            document.getElementById('tpnVolume').addEventListener('input', updateFluidTotals);
+            document.getElementById('lipidVolume').addEventListener('input', updateFluidTotals);
+            document.getElementById('glucoseVolume').addEventListener('input', updateFluidTotals);
+            document.getElementById('enteralVolume').addEventListener('input', updateFluidTotals);
+            document.getElementById('totalFluidTarget').addEventListener('input', function() {
+                const totalFluidTarget = parseFloat(this.value) || 0;
+                document.getElementById('fluidTotal').textContent = totalFluidTarget.toFixed(1) + ' ml/kg/day';
+            });
+            
+            // Calculate Nutrition Values
+            document.getElementById('calculateNutritionBtn').addEventListener('click', function() {
+                if (!currentPatientId) {
+                    alert('Please save patient information first.');
+                    return;
+                }
+                
+                // Collect nutrition plan data
+                const nutritionData = {
+                    patientId: currentPatientId,
+                    totalFluidTarget: document.getElementById('totalFluidTarget').value,
+                    tpnType: document.getElementById('tpnType').value,
+                    tpnVolume: document.getElementById('tpnVolume').value,
+                    lipidType: document.getElementById('lipidType').value,
+                    lipidVolume: document.getElementById('lipidVolume').value,
+                    glucoseConcentration: document.getElementById('glucoseConcentration').value,
+                    glucoseVolume: document.getElementById('glucoseVolume').value,
+                    enteralFeedingType: document.getElementById('enteralFeedingType').value,
+                    enteralVolume: document.getElementById('enteralVolume').value,
+                    enteralFeedingFrequency: document.getElementById('enteralFeedingFrequency').value,
+                    bmfConcentration: document.getElementById('bmfConcentration').value
+                };
+                
+                // Send API request
+                fetch('/api/nutrition_plan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nutritionData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentPlanId = data.plan_id;
+                        
+                        // Update results
+                        document.getElementById('totalEnergy').textContent = data.calculated_values.total_energy.toFixed(2);
+                        document.getElementById('totalProtein').textContent = data.calculated_values.total_protein.toFixed(2);
+                        document.getElementById('totalCarbohydrate').textContent = data.calculated_values.total_carbohydrate.toFixed(2);
+                        document.getElementById('totalFat').textContent = data.calculated_values.total_fat.toFixed(2);
+                        document.getElementById('glucoseInfusionRate').textContent = data.calculated_values.glucose_infusion_rate.toFixed(2);
+                        document.getElementById('totalFluid').textContent = data.calculated_values.total_fluid.toFixed(2);
+                        
+                        document.getElementById('totalSodium').textContent = data.calculated_values.total_sodium.toFixed(2);
+                        document.getElementById('totalPotassium').textContent = data.calculated_values.total_potassium.toFixed(2);
+                        document.getElementById('totalCalcium').textContent = data.calculated_values.total_calcium.toFixed(2);
+                        document.getElementById('totalPhosphate').textContent = data.calculated_values.total_phosphate.toFixed(2);
+                        document.getElementById('totalMagnesium').textContent = data.calculated_values.total_magnesium.toFixed(2);
+                        
+                        // Update recommendations
+                        const recommendationsContainer = document.getElementById('recommendationsContainer');
+                        recommendationsContainer.innerHTML = '';
+                        
+                        if (data.recommendations.length > 0) {
+                            data.recommendations.forEach(recommendation => {
+                                const recItem = document.createElement('div');
+                                recItem.className = 'recommendation-item';
+                                recItem.textContent = recommendation;
+                                recommendationsContainer.appendChild(recItem);
+                            });
+                        } else {
+                            recommendationsContainer.innerHTML = '<div class="alert alert-success">No recommendations needed. All values are within recommended ranges.</div>';
+                        }
+                        
+                        // Update feeding schedule
+                        const feedingScheduleContainer = document.getElementById('feedingScheduleContainer');
+                        feedingScheduleContainer.innerHTML = '';
+                        
+                        if (data.feeding_schedule.length > 0) {
+                            const table = document.createElement('table');
+                            table.className = 'table table-striped';
+                            
+                            const thead = document.createElement('thead');
+                            thead.innerHTML = '<tr><th>Time</th><th>Volume (ml/kg)</th><th>Type</th></tr>';
+                            table.appendChild(thead);
+                            
+                            const tbody = document.createElement('tbody');
+                            data.feeding_schedule.forEach(feed => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${feed.time}</td>
+                                    <td>${feed.volume_per_kg.toFixed(2)}</td>
+                                    <td>${feed.type}</td>
+                                `;
+                                tbody.appendChild(row);
+                            });
+                            table.appendChild(tbody);
+                            
+                            feedingScheduleContainer.appendChild(table);
+                        } else {
+                            feedingScheduleContainer.innerHTML = '<div class="alert alert-warning">No feeding schedule available. Enteral volume may be zero.</div>';
+                        }
+                        
+                        // Move to results tab
+                        const resultsTab = document.getElementById('results-tab');
+                        const bsTab = new bootstrap.Tab(resultsTab);
+                        bsTab.show();
+                        
+                        alert('Nutrition values calculated successfully!');
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while calculating nutrition values.');
+                });
+            });
+            
+            // Export Nutrition Plan
+            document.getElementById('exportPlanBtn').addEventListener('click', function() {
+                if (!currentPlanId) {
+                    alert('Please calculate nutrition values first.');
+                    return;
+                }
+                
+                // Send API request
+                fetch(`/api/export_plan/${currentPlanId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Create a download link for the JSON data
+                        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+                        const downloadAnchorNode = document.createElement('a');
+                        downloadAnchorNode.setAttribute("href", dataStr);
+                        downloadAnchorNode.setAttribute("download", `nutrition_plan_${currentPlanId}.json`);
+                        document.body.appendChild(downloadAnchorNode);
+                        downloadAnchorNode.click();
+                        downloadAnchorNode.remove();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while exporting the nutrition plan.');
+                    });
+            });
+            
+            // Print Results
+            document.getElementById('printResultsBtn').addEventListener('click', function() {
+                if (!currentPlanId) {
+                    alert('Please calculate nutrition values first.');
+                    return;
+                }
+                
+                window.print();
+            });
+            
+            // Print Feeding Schedule
+            document.getElementById('printScheduleBtn').addEventListener('click', function() {
+                if (!currentPlanId) {
+                    alert('Please calculate nutrition values first.');
+                    return;
+                }
+                
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>Feeding Schedule - ${currentPatientId}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            h1 { text-align: center; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Feeding Schedule</h1>
+                        <p><strong>Patient ID:</strong> ${currentPatientId}</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        ${document.getElementById('feedingScheduleContainer').innerHTML}
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "patient": {
+    "patient_id": "TEST001",
+    "gestational_age_at_birth": 28,
+    "birth_weight": 950,
+    "current_weight": 950,
+    "postnatal_age": 3,
+    "phototherapy": "Single",
+    "clinical_condition": "Normal",
+    "weight_category": "premature_less_1000g"
+  },
+  "nutrition_plan": {
+    "plan_id": "NP-TEST001",
+    "date": "2025-03-29",
+    "total_fluid_target": 150,
+    "enteral_volume": 30,
+    "parenteral_volume": 120,
+    "tpn_type": "NICU-mix",
+    "tpn_volume": 80,
+    "lipid_type": "Intralipid_20%",
+    "lipid_volume": 20,
+    "glucose_concentration": "10%",
+    "glucose_volume": 20,
+    "enteral_feeding_type": "Breast milk",
+    "enteral_feeding_frequency": 12,
+    "bmf_concentration": 0
+  },
+  "calculated_values": {
+    "total_energy": 67.2,
+    "total_protein": 5.944000000000001,
+    "total_carbohydrate": 2.0,
+    "total_fat": 4.0,
+    "total_sodium": 4.344,
+    "total_potassium": 5.712000000000001,
+    "total_calcium": 2.056,
+    "total_phosphate": 2.7439999999999998,
+    "total_magnesium": 0.34320000000000006,
+    "glucose_infusion_rate": 1.3888888888888888
+  },
+  "recommendations": [
+    "Increase glucose infusion rate to at least 4 mg/kg/min (current: 1.39 mg/kg/min)",
+    "Consider reducing protein intake to maximum 3.5 g/kg/day (current: 5.94 g/kg/day)",
+    "Consider reducing fat intake to maximum 3.5 g/kg/day (current: 4.00 g/kg/day)"
+  ],
+  "feeding_schedule": [
+    {
+      "time": "00:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "02:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "04:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "06:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "08:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "10:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "12:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "14:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "16:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "18:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "20:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    },
+    {
+      "time": "22:00",
+      "volume_per_kg": 2.5,
+      "type": "Breast milk"
+    }
+  ]
+}

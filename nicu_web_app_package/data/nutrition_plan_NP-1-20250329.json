@@ -1,0 +1,103 @@
+{
+  "patient": {
+    "patient_id": "1",
+    "gestational_age_at_birth": 25.0,
+    "birth_weight": 650,
+    "current_weight": 650,
+    "postnatal_age": 2,
+    "phototherapy": "Single",
+    "clinical_condition": "Normal",
+    "weight_category": "premature_less_1000g"
+  },
+  "nutrition_plan": {
+    "plan_id": "NP-1-20250329",
+    "date": "2025-03-29",
+    "total_fluid_target": 140.0,
+    "enteral_volume": 24.0,
+    "parenteral_volume": 115.0,
+    "tpn_type": "NICU-mix",
+    "tpn_volume": 35.0,
+    "lipid_type": "Intralipid_20%",
+    "lipid_volume": 15.0,
+    "glucose_concentration": "10%",
+    "glucose_volume": 65.0,
+    "enteral_feeding_type": "Breast milk",
+    "enteral_feeding_frequency": 12,
+    "bmf_concentration": 0.0
+  },
+  "calculated_values": {
+    "total_energy": 63.15,
+    "total_protein": 2.6005000000000003,
+    "total_carbohydrate": 6.5,
+    "total_fat": 3.0,
+    "total_sodium": 1.9005,
+    "total_potassium": 2.499,
+    "total_calcium": 0.8995,
+    "total_phosphate": 1.2005,
+    "total_magnesium": 0.15015,
+    "glucose_infusion_rate": 4.513888888888889
+  },
+  "recommendations": [],
+  "feeding_schedule": [
+    {
+      "time": "00:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "02:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "04:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "06:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "08:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "10:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "12:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "14:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "16:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "18:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "20:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    },
+    {
+      "time": "22:00",
+      "volume_per_kg": 2.0,
+      "type": "Breast milk"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "fluid_requirements": {
+    "term": {
+      "day_1": {"min": 40, "max": 60},
+      "day_2": {"min": 50, "max": 70},
+      "day_3": {"min": 60, "max": 80},
+      "day_4": {"min": 60, "max": 100},
+      "day_5_7": {"min": 100, "max": 140},
+      "day_8_14": {"min": 140, "max": 170},
+      "day_15_plus": {"min": 140, "max": 160}
+    },
+    "premature_greater_1500g": {
+      "day_1": {"min": 60, "max": 80},
+      "day_2": {"min": 80, "max": 100},
+      "day_3": {"min": 100, "max": 120},
+      "day_4": {"min": 120, "max": 140},
+      "day_5_7": {"min": 140, "max": 160},
+      "day_8_14": {"min": 140, "max": 160},
+      "day_15_plus": {"min": 140, "max": 160}
+    },
+    "premature_1000_1500g": {
+      "day_1": {"min": 70, "max": 90},
+      "day_2": {"min": 90, "max": 110},
+      "day_3": {"min": 110, "max": 130},
+      "day_4": {"min": 130, "max": 150},
+      "day_5_7": {"min": 160, "max": 180},
+      "day_8_14": {"min": 140, "max": 160},
+      "day_15_plus": {"min": 140, "max": 160}
+    },
+    "premature_less_1000g": {
+      "day_1": {"min": 80, "max": 100},
+      "day_2": {"min": 100, "max": 120},
+      "day_3": {"min": 120, "max": 140},
+      "day_4": {"min": 140, "max": 160},
+      "day_5_7": {"min": 160, "max": 180},
+      "day_8_14": {"min": 140, "max": 160},
+      "day_15_plus": {"min": 140, "max": 160}
+    },
+    "phototherapy_adjustment": {
+      "single": {"min": 10, "max": 20},
+      "double": {"min": 20, "max": 30}
+    }
+  }
+}

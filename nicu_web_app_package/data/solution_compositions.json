@@ -1,0 +1,93 @@
+{
+  "glucose_solutions": {
+    "5%": {
+      "energy_kcal_per_ml": 0.2,
+      "carbohydrate_g_per_ml": 0.05
+    },
+    "10%": {
+      "energy_kcal_per_ml": 0.4,
+      "carbohydrate_g_per_ml": 0.1
+    },
+    "12.5%": {
+      "energy_kcal_per_ml": 0.5,
+      "carbohydrate_g_per_ml": 0.125
+    },
+    "15%": {
+      "energy_kcal_per_ml": 0.6,
+      "carbohydrate_g_per_ml": 0.15
+    },
+    "17.5%": {
+      "energy_kcal_per_ml": 0.7,
+      "carbohydrate_g_per_ml": 0.175
+    },
+    "20%": {
+      "energy_kcal_per_ml": 0.8,
+      "carbohydrate_g_per_ml": 0.2
+    },
+    "25%": {
+      "energy_kcal_per_ml": 1.0,
+      "carbohydrate_g_per_ml": 0.25
+    }
+  },
+  "lipid_solutions": {
+    "Intralipid_20%": {
+      "energy_kcal_per_ml": 1.8,
+      "fat_g_per_ml": 0.2
+    },
+    "SMOF_20%": {
+      "energy_kcal_per_ml": 1.8,
+      "fat_g_per_ml": 0.2
+    }
+  },
+  "protein_solutions": {
+    "Primene": {
+      "protein_g_per_ml": 0.1
+    }
+  },
+  "electrolyte_solutions": {
+    "NaCl_0.9%": {
+      "sodium_mmol_per_ml": 0.154,
+      "chloride_mmol_per_ml": 0.154
+    },
+    "Ringer_lactaat": {
+      "sodium_mmol_per_ml": 0.131,
+      "potassium_mmol_per_ml": 0.0054,
+      "calcium_mmol_per_ml": 0.0018,
+      "chloride_mmol_per_ml": 0.109
+    },
+    "NaBic_4.2%": {
+      "sodium_mmol_per_ml": 0.5
+    },
+    "NaBic_8.4%": {
+      "sodium_mmol_per_ml": 1.0
+    },
+    "NaCl_2.9%": {
+      "sodium_mmol_per_ml": 0.5,
+      "chloride_mmol_per_ml": 0.5
+    },
+    "KCl_7.4%": {
+      "potassium_mmol_per_ml": 1.0,
+      "chloride_mmol_per_ml": 1.0
+    },
+    "CaCl2_3.3%": {
+      "calcium_mmol_per_ml": 0.225,
+      "chloride_mmol_per_ml": 0.45
+    },
+    "CaGluc_10%": {
+      "calcium_mmol_per_ml": 0.226,
+      "chloride_mmol_per_ml": 0.452
+    },
+    "MgCl2_10%": {
+      "magnesium_mmol_per_ml": 0.5,
+      "chloride_mmol_per_ml": 1.0
+    },
+    "MgSulfaat": {
+      "magnesium_mmol_per_ml": 0.64
+    },
+    "KNaFosfaat": {
+      "sodium_mmol_per_ml": 0.5,
+      "potassium_mmol_per_ml": 1.25,
+      "phosphate_mmol_per_ml": 1.5
+    }
+  }
+}
